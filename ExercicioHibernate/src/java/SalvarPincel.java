@@ -63,7 +63,7 @@ public class SalvarPincel extends HttpServlet {
             out.println("<title>Servlet SalvarPincel</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SalvarPincel at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Teste Servlet SalvarPincel at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
             
