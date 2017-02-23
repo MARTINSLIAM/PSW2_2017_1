@@ -32,45 +32,35 @@ public class SalvarPincel extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            
-            Pincel p1 = new Pincel();
-            p1.setCor("azul");
-            p1.setFabricante("Pilot");
-            p1.setNum_serie(10254);
-            
-            Session sessao = HibernateUtil.
-                                getSessionFactory()
-                                .openSession();
-            
-            Transaction tx = sessao.beginTransaction();
-            
-            sessao.save(p1);
-            sessao.flush();
-            
-            tx.commit();
-            
-            sessao.close();
-            
-               
-            
-            
-            
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SalvarPincel</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Teste Servlet SalvarPincel at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-            
-            
-            
-            
-            
+              
+            try{
+                Pincel p1 = new Pincel();
+
+                p1.setCor(request.getParameter("cor"));
+                p1.setFabricante(request.getParameter("fab"));
+                String num = request.getParameter("num");
+                if(num != null){
+                    Integer numi = Integer.parseInt(num);
+                    p1.setNum_serie(numi);
+                }
+
+                Session sessao = HibernateUtil.
+                                    getSessionFactory()
+                                    .openSession();
+
+                Transaction tx = sessao.beginTransaction();
+
+                sessao.save(p1);
+                sessao.flush();
+
+                tx.commit();
+
+                sessao.close();
+                
+                out.println("Registro inserido com sucesso!");
+            } catch (Exception ex) {
+                out.println("Erro ao inserir pincel: " + ex.getMessage());
+            }
             
         }
     }

@@ -6,17 +6,20 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author rafael.soares
+ * @author Rafael.Soares
  */
-public class CarregaPincel extends HttpServlet {
+public class ConsultaPincel extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,46 +34,33 @@ public class CarregaPincel extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+
+            try{
             
-            
-            Integer idPincel;
-            
-            if(request.getParameter("chave") == null || request.getParameter("chave").equals("")) {
-                out.println("Favor informar um id");
-            } else {
-                
-                idPincel = Integer.parseInt(request.getParameter("chave"));
-                
-                try{
+                String cor = request.getParameter("cor");
 
-                    Pincel pincel;
+                Session s = HibernateUtil
+                        .getSessionFactory()
+                        .openSession();
 
-                    Session sessao = HibernateUtil
-                                        .getSessionFactory()
-                                        .openSession();
+                Criteria criteria = s.createCriteria(Pincel.class);
+                criteria.add(Restrictions.eq("cor", cor));
 
-                    pincel = (Pincel) sessao.get(Pincel.class, idPincel);
+                List<Pincel> result = criteria.list();
 
-                    if(pincel == null) {
-                       out.println("Nao encontrei o pincel de id: " + idPincel);
-                    }
-                    else {
 
-                        out.println("Dados do pincel :" + idPincel + " ");
-                        out.println("cor:" + pincel.getCor());
-                        out.println("fabricante: " + pincel.getFabricante());
-                        out.println("num_serie: " + pincel.getNum_serie());
-                    }
-                } catch (Exception ex){
-                    out.println("Erro ao buscar pinceis: " + ex.getMessage());
+                out.println("Pinceis encontrados ("+ result.size() + "): <br>");
+
+                for(Pincel p : result){
+                    out.println("<br>Pincel num:" + p.getNum_serie());
+                    out.println("<br>cor :" + p.getCor());
+                    out.println("<br>");
                 }
+
+                s.close();
+            } catch (Exception ex){
+                out.println("Erro ao buscar pinceis: " + ex.getMessage());
             }
-
-            
-            
-
-
         }
     }
 
