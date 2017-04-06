@@ -62,6 +62,22 @@ public class PiadaDAO {
         
         sessao.delete(sessao.get(Piada.class, id));
     }
+    
+    public Piada atualizar(int id, Piada nova){
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        Piada antiga = (Piada) sessao.get(Piada.class, id);
+        antiga.setAdulta(nova.isAdulta());
+        antiga.setNome(nova.getNome());
+        antiga.setNota(nova.getNota());
+        antiga.setTexto(nova.getTexto());
+        
+        sessao.save(antiga);
+        sessao.flush();
+        
+        return antiga;
+    }
+    
+    
 
 
 
