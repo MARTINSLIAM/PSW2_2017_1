@@ -54,6 +54,14 @@ public class PiadaDAO {
 
         return criteria.list();
     }
+    
+    
+    
+    public void deletar(int id){
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        
+        sessao.delete(sessao.get(Piada.class, id));
+    }
 
 
 
