@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>meu teste js</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        
+    <head>
+
+    <body ng-app="minhaapp" ng-controller="meuctrl" >
+        
+        <input type="text"  ng-model="texto">
+        <br/>
+        
+        <div id="divteste">
+            <h1>teste legal: {{texto}}</h1>
+            
+            ovalor de teste 2 eh : {{teste2}}
+            <div ng-repeat="numero in teste2">
+                <h1>o numeo eh:{{numero}} olha uq emassa</h1>
+                <img src="" width="50">
+                <p>muitomassa          </p>
+            </div>
+            
+             
+        </div>
+        
+        <button ng-click="trocaTeste2()"> sortear um numero </button>
+        
+    </body>
+        
+    <script>
+    var app = angular.module('minhaapp', []);
+        
+    var funcbata = function($scope) {
+        $scope.texto = "xxxx";
+        
+        $scope.teste2 = [];
+        
+        
+        $scope.trocaTeste2 = function(){
+            var aleatorio = Math.floor(Math.random() * 100);
+            $scope.teste2.push(aleatorio + $scope.texto );
+        
+        }
+    };
+        
+    app.controller('meuctrl', funcbata);
+    
+    </script>
+        
+</html>
