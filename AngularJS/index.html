@@ -1,78 +1,31 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
     <head>
-        <title>meu teste js</title>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
         
-    <head>
-
-    <body ng-app="minhaapp" ng-controller="meuctrl" >
+    </head>
+    <body ng-app="piadaapp" ng-controller="piadactrl">
         
-        nome: <input type="text" ng-model="piada.nome"> <br>
-        texto: <input type="text" ng-model="piada.texto"> <br>
-        nota: <input type="number" ng-model="piada.nota"> <br>
-        adulta <input type="checkbox" ng-model="piada.adulta"><br>
-        autor: <input type="text" ng-model="piada.autor.nome"><br/>
-        {{piada}}
+        <h1>Sis piadas</h1>
+        <h6>v.0.0.1</h6>
         
-        <br>
-        <button ng-click="salvar(piada)">Salvar</button>
-        <button ng-click="listar()">listar</button>
+        <a href="#">Home</a>
+        <a href="#/cadastro">Cadastro </a>
+        <a href="#/listar">Listar </a>
         
-        <div ng-repeat="piada in piadas">
-            <ol>
-                <li>{{piada.nome}}</li>
-                <li>{{piada.nota}}</li>
-                <li>{{piada.autor.nome}}</li>
-            </ol>
-        </div>
+        <ng-view></ng-view>
         
-        <p>Resultado:</p>
-        <p>status:{{status}}</p>
-        <p>erro:{{erro}}</p>
-        <p>resp:{{resp}}</p>
+        <hr>
+        <h6>Desenvolvido por luso soft ltda</h6>
+        <script src="app.js"></script>
     </body>
-        
-    <script>
-    var app = angular.module('minhaapp', []);
-        
-    var funcbata = function($scope, $http) {
-        
-        $scope.status="parado";
-        
-        $scope.listar = function(){
-          $scope.status="carregando";
-          $http.get("http://piada.herokuapp.com/piada")
-          .then(function(resp){
-              $scope.status="concluido";
-              $scope.piadas = resp.data;
-          },function(error){
-              $scope.status="concluido";
-              $scope.erro=error;     
-          });
-        
-        }
-        
-        
-        $scope.salvar = function(piada){
-            $scope.status="carregando";
-            
-            $http.post("http://piada.herokuapp.com/piada",piada)
-                .then(function(response){
-                    $scope.status="concluido";
-                    $scope.resp =response;
-                }, function(error){
-                    $scope.status="concluido";
-                    $scope.erro=error;     
-                })                           
-
-            console.log("oi");                              
-        }
-        
-
-    };
-        
-    app.controller('meuctrl', funcbata);
-    
-    </script>
-        
 </html>
