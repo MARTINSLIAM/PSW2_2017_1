@@ -59,8 +59,9 @@ public class PiadaDAO {
     
     public void deletar(int id){
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-        
+        Transaction tx = sessao.beginTransaction();
         sessao.delete(sessao.get(Piada.class, id));
+        tx.commit();
     }
     
     public Piada atualizar(int id, Piada nova){
